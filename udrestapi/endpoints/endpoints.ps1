@@ -13,7 +13,7 @@ if ($car) {
     $Cache:car = $car
 }
 else {
-    $Cache:car = ([PSCustomObject]@{Car = "No car yet!" } | ConvertTo-Json)
+    $Cache:car = [PSCustomObject]@{Car = "No car yet!" }
 }
 
 #Get: Invoke-WebRequest http://localhost:8080/api/car
