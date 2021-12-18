@@ -14,10 +14,16 @@ RUN mkdir UDRestAPI
 WORKDIR /UniversalDashboard/UDDashboard
 COPY /module/UniversalDashboard.Community/2.9.0/ .
 COPY /webconfigs/uddashboard/web.config .
+COPY /uddashboard/uddashboard.ps1 .
 
 WORKDIR /UniversalDashboard/UDRestAPI
 COPY /module/UniversalDashboard.Community/2.9.0/ .
 COPY /webconfigs/udrestapi/web.config .
+COPY /udrestapi/ .
+
+#Space in path so special syntax
+WORKDIR /
+COPY ["/module/", "/Program Files/WindowsPowerShell/Modules/"]
 
 WORKDIR /Temp
 COPY /tools/ .
