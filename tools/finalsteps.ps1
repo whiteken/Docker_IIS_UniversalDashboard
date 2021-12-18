@@ -11,15 +11,8 @@ $accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule("IIS
 $acl.SetAccessRule($accessRule)
 $acl | Set-Acl
 
-#Install ASP.NET Core hosting bundle - see https://docs.universaldashboard.io/webserver/running-dashboards/iis
-Set-Location "C:\Temp"
-$source = "https://download.visualstudio.microsoft.com/download/pr/ba001109-03c6-45ef-832c-c4dbfdb36e00/e3413f9e47e13f1e4b1b9cf2998bc613/dotnet-hosting-2.2.8-win.exe"
-$destination = "C:\Temp\dotnet-hosting-2.2.8-win.exe"
-$wc = New-Object System.Net.WebClient
-$wc.DownloadFile($source, $destination)
-Start-Process -FilePath $destination -Wait -ArgumentList '/Quiet'
-
 #Application pool setting for IIS
+Import-Module WebAdministration
 Set-ItemProperty IIS:\AppPools\UDDashboard managedPipelineMode Integrated
 Set-ItemProperty IIS:\AppPools\UDDashboard autoStart true
 Set-ItemProperty IIS:\AppPools\UDRestAPI managedPipelineMode Integrated
@@ -32,3 +25,5 @@ Find-Module UniversalDashboard.Community | Install-Module
 #>
 
 iisreset
+
+Write-Output "Finalsteps script complete!"

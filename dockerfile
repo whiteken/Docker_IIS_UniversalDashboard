@@ -31,7 +31,9 @@ RUN New-WebAppPool -Name UDDashboard
 RUN Get-Website -Name 'Default Web Site' | Remove-Website
 RUN New-Website -Name UDDashboard -Port 80 -ApplicationPool UDDashboard -PhysicalPath C:\UniversalDashboard\UDDashboard\ -Force
 RUN New-Website -Name UDRestAPI -Port 8080 -ApplicationPool UDRestAPI -PhysicalPath C:\UniversalDashboard\UDRestAPI\ -Force
-RUN Start-Process -Filepath "./finalsteps.ps1" -Wait
+#Install ASP.NET Core hosting bundle - see https://docs.universaldashboard.io/webserver/running-dashboards/iis
+RUN Start-Process -FilePath "./dotnet-hosting-2.2.8-win.exe" -Wait -ArgumentList "/Quiet"
+RUN .\finalsteps.ps1
 
 #Website port
 EXPOSE 80/tcp
