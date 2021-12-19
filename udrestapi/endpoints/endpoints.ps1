@@ -1,7 +1,3 @@
-New-UDEndpoint -Url "user" -Method "GET" -Endpoint {
-    @("Adam", "Sarah", "Bill") | ConvertTo-Json
-}
-
 $dataFolderPath = "C:\UniversalDashboard\udrestapi\datacache"
 
 $jsonCache = Get-ChildItem -Path $dataFolderPath -Filter '*.json'
@@ -17,12 +13,12 @@ else {
 }
 
 #Get: Invoke-WebRequest http://localhost:8080/api/car
-$endPointsDashing += New-UDEndpoint  -Url '/car' -EndPoint {
+$endPoints += New-UDEndpoint  -Url '/car' -EndPoint {
     $Cache:car | ConvertTo-Json
 }
 
 #Post: Invoke-WebRequest http://localhost:8080/api/car
-$endPoints += New-UDEndpoint  -Url '/car' -Method POST -EndPoint {
+$endPoints += New-UDEndpoint  -Url '/car' -Method Post -EndPoint {
     param($Body)
 
     $raw = $Body | ConvertFrom-Json
@@ -38,7 +34,3 @@ $endPoints += New-UDEndpoint  -Url '/car' -Method POST -EndPoint {
         Write-Error "$($raw.Car) is not an accepted type of car!"
     }
 }
-
-#Change the dashboard tile by sending diffent types of car...
-#$body = [PSCustomObject]@{"Car" = "BMW" } | ConvertTo-Json
-#Invoke-RestMethod -Uri 'http://localhost:9000/api/car' -Method Post -Body $body
